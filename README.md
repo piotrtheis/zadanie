@@ -5,8 +5,6 @@
 ```
 $ cp .env.dist .env
 ```
-
-##### Starting/building environment
 ```
 $ docker-compose up -d
 ```
