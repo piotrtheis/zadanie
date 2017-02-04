@@ -1,0 +1,38 @@
+version: '2'
+
+services:
+    db:
+        image: mysql
+        container_name: "db"
+        volumes:
+            - ./ci/.data/db:/var/lib/mysql
+        environment:
+            MYSQL_DATABASE: "sf"
+            MYSQL_ROOT_PASSWORD: "root"
+    php:
+        build: ./ci/php7-fpm
+        container_name: "php"
+        links:
+            - db:mysqldb
+            - postfix
+        volumes:
+            - ./:/var/www/symfony
+            - /home/commposer/.composer/cache/:/root/.composer/cache/
+    nginx:
+        build: ./ci/nginx
+        container_name: "server"
+        links:
+            - php
+            - postfix
+        volumes_from:
+            - php
+        volumes:
+            - ./ci/logs/nginx/:/var/log/nginx
+    postfix:
+        image: juanluisbaptiste/postfix:latest
+        container_name: "postfix"
+        environment:
+            SMTP_SERVER: $SMTP_SERVER
+            SMTP_USERNAME: $SMTP_USERNAME
+            SMTP_PASSWORD: $SMTP_PASSWORD
+            SERVER_HOSTNAME: $SERVER_HOSTNAME
