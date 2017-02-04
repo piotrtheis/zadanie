@@ -4,10 +4,12 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\Comment;
 use AppBundle\Entity\User;
+use AppBundle\Event\NewCommentEvent;
 use AppBundle\Form\CommentType;
 use AppBundle\Repository\CommentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class DefaultController extends Controller
@@ -30,8 +32,12 @@ class DefaultController extends Controller
 
             /** @var CommentRepository $commentRepository */
             $commentRepository = $this->getDoctrine()->getRepository("AppBundle:Comment");
-
             $commentRepository->createComment($comment);
+
+            $event = new NewCommentEvent($comment);
+
+            $eventDispatcher = $this->get("event_dispatcher");
+            $eventDispatcher->dispatch(NewCommentEvent::NAME, $event);
 
             $this->addFlash("alert", $this->get("translator")->trans("Comment added successfully."));
             return $this->redirectToRoute("homepage");
