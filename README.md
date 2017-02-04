@@ -31,8 +31,9 @@ $ docker exec -it php bin/console doctrine:fixtures:load
 
 ##### Container ip
  ```
-$ docker inspect --format '{{ .NetworkSettings.IPAddress }}' server
+$ docker inspect server
 ```
+Server ip will be available under IPAddress key in NetworkSettings section.
 
 ##### Notifier tests
 ```
