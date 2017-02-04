@@ -1,0 +1,4 @@
+services:
+#    tysdever_notifier.example:
+#        class: Tysdever\NotifierBundle\Example
+#        arguments: ["@service_id", "plain_value", "%parameter%"]
