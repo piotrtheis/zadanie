@@ -1,4 +1,4 @@
 services:
-#    tysdever_notifier.example:
-#        class: Tysdever\NotifierBundle\Example
-#        arguments: ["@service_id", "plain_value", "%parameter%"]
+    tysdever_notifier.email_notifier:
+        class: Tysdever\NotifierBundle\Notifier\EmailNotifier
+        arguments: ["@swiftmailer.mailer"]
