@@ -36,6 +36,13 @@ class User
      */
     private $comments;
 
+    /**
+     * User constructor.
+     */
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * Get id
@@ -69,6 +76,14 @@ class User
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getComments()
+    {
+        return $this->comments;
     }
 }
 
