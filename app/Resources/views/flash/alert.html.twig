@@ -1,0 +1,3 @@
+{% for flash_message in app.session.flashBag.get('alert') %}
+    {{ flash_message }}
+{% endfor %}

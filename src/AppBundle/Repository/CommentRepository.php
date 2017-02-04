@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Comment;
+
 /**
  * CommentRepository
  *
@@ -10,4 +12,10 @@ namespace AppBundle\Repository;
  */
 class CommentRepository extends \Doctrine\ORM\EntityRepository
 {
+
+    public function createComment(Comment $comment)
+    {
+        $this->_em->persist($comment);
+        $this->_em->flush();
+    }
 }
